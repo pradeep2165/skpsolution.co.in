@@ -1,0 +1,202 @@
+/* Base layout */
+.radio-app {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: #f1f1f1;
+
+}
+
+/* Sidebar */
+.station-sidebar {
+    width: 280px;
+    padding: 1rem;
+    background: rgba(20, 30, 40, 0.9);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+}
+
+.station-sidebar h2 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Search Input */
+.search-input {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background-color: #1d2a38;
+    color: white;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+/* Scrollbar */
+.station-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.station-sidebar::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Station List */
+.station-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.station-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.station-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.station-item.active {
+    background-color: #1e3a56;
+}
+
+.station-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* Player */
+.player-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player {
+    text-align: center;
+    max-width: 400px;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.station-art {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #fff;
+}
+
+.rotating-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.station-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.outline-btn {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.outline-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+/* Volume slider */
+.volume-slider {
+    width: 100%;
+    height: 6px;
+    appearance: none;
+    border-radius: 5px;
+    background: #ccc;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .radio-app {
+        flex-direction: column;
+    }
+
+    .station-sidebar {
+        width: 100%;
+        max-height: 350px;
+        overflow-y: auto;
+        box-shadow: none;
+    }
+
+    .player-content {
+        padding: 0 1rem;
+        width: 100%;
+        position: relative;
+    }
+
+    .station-art {
+        height: 70px;
+        width: 70px;
+    }
+
+    .player {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+    }
+}

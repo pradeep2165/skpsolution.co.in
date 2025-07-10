@@ -1,42 +1,147 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+ :root {
+   --primary: #4f46e5;
+   --accent: #9333ea;
+   --bg-light: #f9f9f9;
+   --text-dark: #1f2937;
+ }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+ * {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+ }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+ body {
+   font-family: 'Segoe UI', sans-serif;
+   line-height: 1.6;
+   background-color: white;
+   color: var(--text-dark);
+ }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+ header {
+   background: linear-gradient(to right, var(--primary), var(--accent));
+   color: white;
+   text-align: center;
+   padding: 60px 20px;
+ }
 
-.card {
-  padding: 2em;
-}
+ header h1 {
+   font-size: 2.5rem;
+   margin-bottom: 10px;
+ }
 
-.read-the-docs {
-  color: #888;
-}
+ header p {
+   font-size: 1.2rem;
+   margin-bottom: 20px;
+ }
+
+ .cta-button {
+   background: white;
+   color: var(--primary);
+   padding: 12px 24px;
+   border: none;
+   border-radius: 999px;
+   font-weight: bold;
+   cursor: pointer;
+   transition: background 0.3s;
+ }
+
+ .cta-button:hover {
+   background: #f0f0f0;
+ }
+
+ section {
+   padding: 60px 20px;
+   max-width: 1200px;
+   margin: auto;
+ }
+
+ h2 {
+   font-size: 2rem;
+   text-align: center;
+   margin-bottom: 40px;
+ }
+
+ .grid {
+   display: grid;
+   gap: 20px;
+ }
+
+ @media (min-width: 768px) {
+   .grid-2 {
+     grid-template-columns: repeat(2, 1fr);
+   }
+
+   .grid-3 {
+     grid-template-columns: repeat(3, 1fr);
+   }
+
+   .grid-4 {
+     grid-template-columns: repeat(4, 1fr);
+   }
+ }
+
+ .card {
+   background: var(--bg-light);
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+   transition: 0.3s;
+ }
+
+ .card:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+ }
+
+ .card img {
+   width: 100%;
+   border-radius: 10px;
+   margin-bottom: 15px;
+ }
+
+ .testimonial {
+   font-style: italic;
+   background: white;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+ }
+
+ .testimonial small {
+   display: block;
+   margin-top: 10px;
+   font-weight: bold;
+   text-align: right;
+ }
+
+ form input,
+ form textarea {
+   width: 100%;
+   padding: 12px;
+   margin-bottom: 15px;
+   border: 1px solid #ccc;
+   border-radius: 6px;
+   font-size: 1rem;
+ }
+
+ form button {
+   background: var(--primary);
+   color: white;
+   padding: 12px 24px;
+   border: none;
+   border-radius: 6px;
+   font-size: 1rem;
+   cursor: pointer;
+ }
+
+ footer {
+   text-align: center;
+   padding: 20px;
+   background: #f3f4f6;
+   font-size: 0.9rem;
+ }
+
+ .card svg {
+   margin-bottom: 0.5rem;
+ }
