@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import "./style.css";
-import stationData from "./allIndiaStations.js";
+import stationData from "./allIndiaStations.ts";
 
 interface Station {
-  name: string;
-  image: string;
-  stream: string;
   radio_id: string;
   radio_name: string;
   radio_image: string;

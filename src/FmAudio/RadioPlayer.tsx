@@ -2,12 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import "./RadioPlayer.css";
-import stationData from "./allIndiaStations.js";
+import stationData from "./allIndiaStations.ts";
+import { Helmet } from "react-helmet-async";
 
 interface Station {
-  name: string;
-  image: string;
-  stream: string;
   radio_id: string;
   radio_name: string;
   radio_image: string;
@@ -23,7 +21,7 @@ const stations: Station[] = stationData.stations;
 const RadioPlayer: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [volume, setVolume] = useState(0.8);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -101,11 +99,27 @@ const RadioPlayer: React.FC = () => {
 
   return (
     <div className="radio-app responsive-layout">
+      <Helmet>
+        <title>Online FM Radio Player | Stream Live Music & Radio</title>
+        <meta name="description" content="Listen to live FM radio stations online. Enjoy nonstop music, talk shows, and news channels from around the world – all in one simple web radio player." />
+        <meta name="keywords" content="online FM radio, live radio streaming, internet radio player, music radio, FM station stream" />
+        <meta name="author" content="skpsolution" />
+
+        {/* Open Graph (for Facebook and others) */}
+        <meta property="og:title" content="Online FM Radio Player" />
+        <meta property="og:description" content="Free online FM radio streaming. Tune into music, news, and talk shows from global radio stations." />
+        <meta property="og:url" content="https://skpsolution.co.in/fmRadio" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:title" content="Online FM Radio Player" />
+        <meta name="twitter:description" content="Stream live FM radio with music, talk, and more. Simple, free, and accessible online radio player." />
+      </Helmet>
+      ;
       <aside className="station-sidebar">
         <h2>📻 Indian Radios</h2>
         <input type="text" placeholder="Search station..." className="search-input" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <div className="station-list">
-          {filteredStations.map((s, i) => (
+          {filteredStations.map((s) => (
             <div key={s.radio_id} className={`station-item ${stations.indexOf(s) === currentIndex ? "active" : ""}`} onClick={() => setCurrentIndex(stations.indexOf(s))}>
               <img src={s.radio_image} alt={s.radio_name} className="station-icon" />
               <span>{s.radio_name}</span>
@@ -113,7 +127,6 @@ const RadioPlayer: React.FC = () => {
           ))}
         </div>
       </aside>
-
       <main className="player-content">
         <div className="player">
           <div className="station-art">

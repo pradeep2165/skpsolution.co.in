@@ -5,7 +5,6 @@
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     color: #f1f1f1;
-
 }
 
 /* Sidebar */
@@ -15,6 +14,7 @@
     background: rgba(20, 30, 40, 0.9);
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
     overflow-y: auto;
+    margin-top: 70px;
 }
 
 .station-sidebar h2 {
@@ -87,6 +87,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 70px;
 }
 
 .player {
@@ -181,6 +182,7 @@
         max-height: 350px;
         overflow-y: auto;
         box-shadow: none;
+        margin-top: 40px;
     }
 
     .player-content {

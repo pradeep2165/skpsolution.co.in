@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom right, #e0e7ff, #f3e8ff, #ffe4e6);
+    background: linear-gradient(to bottom right, #a1aedc, #f3e8ff, #ffe4e6);
     padding: 1rem;
 }
 
@@ -17,6 +17,7 @@
     border-radius: 1rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     padding: 2rem;
+    margin-top: 50px;
 }
 
 .downloader-title {

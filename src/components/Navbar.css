@@ -1,0 +1,77 @@
+/* Base Styles */
+.navbar {
+    background-color: #17171d;
+    color: white;
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 23;
+    width: 100%;
+    position: fixed;
+}
+
+.navbar .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .nav-brand a {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-block: auto;
+}
+
+/* Nav links for desktop */
+.navbar .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links li a:hover {
+    color: #4a90e2;
+}
+
+/* Responsive: show hamburger menu and collapse nav */
+@media (max-width: 768px) {
+    .navbar .menu-toggle {
+        display: block;
+    }
+
+    .navbar .nav-links {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: #2a2a40;
+        padding: 1rem;
+        display: none;
+    }
+
+    .navbar .nav-links.active {
+        display: flex;
+    }
+
+    .navbar .nav-links li {
+        margin: 0.5rem 0;
+    }
+}

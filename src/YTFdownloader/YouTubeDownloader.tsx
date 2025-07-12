@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./YouTubeDownloader.css";
 
+import { Helmet } from "react-helmet-async";
+
 type FormatKey = string;
 
 type Status = "idle" | "loading" | "ready" | "error";
@@ -89,6 +91,18 @@ const YouTubeDownloader: React.FC = () => {
 
   return (
     <main className="page-wrapper">
+      <Helmet>
+        <title>YouTube Video Downloader | Download Videos in HD, MP4, MP3</title>
+        <meta name="description" content="Download YouTube videos in HD, MP4, or MP3 formats instantly. Fast and secure online video downloader — no installation needed." />
+        <meta name="keywords" content="YouTube video downloader, download YouTube videos, MP4 YouTube download, YouTube to MP3, online video downloader" />
+        <meta name="author" content="skpsolution" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:title" content="YouTube Video Downloader" />
+        <meta property="og:description" content="Free and fast tool to download YouTube videos and audio in multiple formats. Works directly in your browser." />
+        <meta property="og:url" content="https://skpsolution.co.in/ytf-download" />
+      </Helmet>
+      ;
       <div className="downloader-box">
         <h1 className="downloader-title">🎬 YouTube Video Downloader</h1>
 

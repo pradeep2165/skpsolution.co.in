@@ -2,20 +2,23 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import SpeedTest from "./SpeedTester/SpeedTest";
 import RadioPlayer from "./FmAudio/RadioPlayer";
-import { FaTachometerAlt, FaBroadcastTower, FaYoutube } from "react-icons/fa";
+import { FaTachometerAlt, FaBroadcastTower, FaYoutube, FaBlog, FaCode, FaPaintBrush, FaRegObjectGroup } from "react-icons/fa";
 import YouTubeDownloader from "./YTFdownloader/YouTubeDownloader";
-
+import BlogLayout from "./Blog";
+import BlogRadioPlayer from "./Blog/BlogRadioPlayer";
+import BlogSpeedTestPost from "./Blog/BlogSpeedTestPost";
+import BlogCardDesign from "./Blog/BlogCardDesign";
+import JSPlayGround from "./JSPlayGround";
+import ColorPicker from "./ColorPicker";
+import Navbar from "./components/Navbar";
+import { HelmetProvider } from "react-helmet-async";
+// import Breadcrumbs from "./components/Breadcrumbs";
+import TransformPlayground from "./TransformPlayground/TransformPlayground";
+import WavesHero from "./components/WavesHero";
 function Home() {
   return (
     <>
-      <header>
-        <h1>SKPSolution</h1>
-        <p>We build eCommerce, Property, Downloader, and Radio apps with passion.</p>
-        <a href="#contact">
-          <button className="cta-button">Get a Free Quote</button>
-        </a>
-      </header>
-
+      <WavesHero />
       <section>
         <h2>Our Specializations</h2>
         <div className="grid grid-4">
@@ -58,6 +61,32 @@ function Home() {
             <h3>YT Downloader</h3>
             <p>Grab YouTube videos instantly in your chosen format.</p>
           </Link>
+          <Link to="/blog" className="card" style={{ textDecoration: "none", color: "inherit" }}>
+            <FaBlog size={48} color="#15cc24ff" />
+            <h3>Blog</h3>
+            <p>Explore tips, guides, and updates about YouTube video downloads.</p>
+          </Link>
+          <Link to="/js-paly-ground" className="card" style={{ textDecoration: "none", color: "inherit" }}>
+            <FaCode size={48} color="#0033ffff" />
+            <div>
+              <h3>JS Playground</h3>
+              <p>Explore tips, guides, and updates about YouTube video downloads.</p>
+            </div>
+          </Link>
+          <Link to="/color-picker" className="card" style={{ textDecoration: "none", color: "inherit" }} aria-label="Navigate to color picker tool">
+            <FaPaintBrush size={48} color="#563ce9ff" />
+            <div>
+              <h3>Color Picker</h3>
+              <p>Choose and experiment with beautiful colors using our intuitive color picker.</p>
+            </div>
+          </Link>
+          <Link to="/transform-playground" className="card" style={{ textDecoration: "none", color: "inherit" }} aria-label="Navigate to CSS transform playground tool">
+            <FaRegObjectGroup size={48} color="#5ed1beff" />
+            <div>
+              <h3>CSS Transform Playground</h3>
+              <p>Experiment with transform properties like rotate, scale, skew, and more visually.</p>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -92,14 +121,28 @@ function Home() {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/speedtest" element={<SpeedTest />} />
-        <Route path="/fmRadio" element={<RadioPlayer />} />
-        <Route path="/ytf-download" element={<YouTubeDownloader />} />
-      </Routes>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <Navbar />
+        {/* <Breadcrumbs /> */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/speedtest" element={<SpeedTest />} />
+          <Route path="/fmRadio" element={<RadioPlayer />} />
+          <Route path="/ytf-download" element={<YouTubeDownloader />} />
+          <Route path="/js-paly-ground" element={<JSPlayGround />} />
+          <Route path="/color-picker" element={<ColorPicker />} />
+          <Route path="/transform-playground" element={<TransformPlayground />} />
+
+          <Route path="/blog" element={<BlogLayout />}>
+            <Route path="" element={<BlogRadioPlayer />} />
+            <Route path="radio-player" element={<BlogRadioPlayer />} />
+            <Route path="speed-test" element={<BlogSpeedTestPost />} />
+            <Route path="card-design" element={<BlogCardDesign />} />
+          </Route>
+        </Routes>
+      </Router>
+    </HelmetProvider>
   );
 }
 

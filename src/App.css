@@ -18,7 +18,7 @@
    color: var(--text-dark);
  }
 
- header {
+ /* header {
    background: linear-gradient(to right, var(--primary), var(--accent));
    color: white;
    text-align: center;
@@ -26,6 +26,7 @@
  }
 
  header h1 {
+   margin: 50px 0;
    font-size: 2.5rem;
    margin-bottom: 10px;
  }
@@ -33,9 +34,9 @@
  header p {
    font-size: 1.2rem;
    margin-bottom: 20px;
- }
+ } */
 
- .cta-button {
+ /* .cta-button {
    background: white;
    color: var(--primary);
    padding: 12px 24px;
@@ -48,7 +49,7 @@
 
  .cta-button:hover {
    background: #f0f0f0;
- }
+ } */
 
  section {
    padding: 60px 20px;
@@ -56,32 +57,32 @@
    margin: auto;
  }
 
- h2 {
+ section h2 {
    font-size: 2rem;
    text-align: center;
    margin-bottom: 40px;
  }
 
- .grid {
+ section .grid {
    display: grid;
    gap: 20px;
  }
 
  @media (min-width: 768px) {
-   .grid-2 {
+   section .grid-2 {
      grid-template-columns: repeat(2, 1fr);
    }
 
-   .grid-3 {
+   section .grid-3 {
      grid-template-columns: repeat(3, 1fr);
    }
 
-   .grid-4 {
+   section .grid-4 {
      grid-template-columns: repeat(4, 1fr);
    }
  }
 
- .card {
+ section .card {
    background: var(--bg-light);
    padding: 20px;
    border-radius: 10px;
@@ -89,18 +90,18 @@
    transition: 0.3s;
  }
 
- .card:hover {
+ section .card:hover {
    transform: translateY(-5px);
    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
  }
 
- .card img {
+ section .card img {
    width: 100%;
    border-radius: 10px;
    margin-bottom: 15px;
  }
 
- .testimonial {
+ section .testimonial {
    font-style: italic;
    background: white;
    padding: 20px;
@@ -108,15 +109,15 @@
    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
  }
 
- .testimonial small {
+ section .testimonial small {
    display: block;
    margin-top: 10px;
    font-weight: bold;
    text-align: right;
  }
 
- form input,
- form textarea {
+ section form input,
+ section form textarea {
    width: 100%;
    padding: 12px;
    margin-bottom: 15px;
@@ -125,7 +126,7 @@
    font-size: 1rem;
  }
 
- form button {
+ section form button {
    background: var(--primary);
    color: white;
    padding: 12px 24px;

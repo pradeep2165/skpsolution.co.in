@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./SpeedTest.css";
+import { Helmet } from "react-helmet-async";
 
 const SpeedTest: React.FC = () => {
   const needleRef = useRef<HTMLDivElement>(null);
@@ -118,7 +119,12 @@ const SpeedTest: React.FC = () => {
   };
 
   return (
-    <div className="main">
+    <div className="speedtest_main">
+      <Helmet>
+        <title>Speed Test Tool internet </title>
+        <meta name="description" content="Test your internet speed: download, upload, and ping – all in one clean UI." />
+      </Helmet>
+      ;
       <div className="container">
         <h1>Speed Test</h1>
         <div className="meter" ref={meterRef}>
