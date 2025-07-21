@@ -46,7 +46,7 @@ export default function VirtualizedList({ list, height, itemHeight, setStation, 
               }}
               onClick={() => setStation(item)}
             >
-              <img src={item.radio_image} alt="radio images" loading="lazy" className="station-icon" />
+              <img src={item.radio_image} alt="radio images" loading="eager" decoding="async" className="station-icon" />
               <span>{item.radio_name}</span>
             </div>
           );
