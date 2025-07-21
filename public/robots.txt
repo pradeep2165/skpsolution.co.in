@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://skpsolution.co.in/sitemap.xml

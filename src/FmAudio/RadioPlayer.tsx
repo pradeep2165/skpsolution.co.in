@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import Hls from "hls.js";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import "./RadioPlayer.css";
 import stationData from "./allIndiaStations.ts";
 import { Helmet } from "react-helmet-async";
+// import VirtualizedList from "./VirtualizedList.tsx";
 
 interface Station {
   radio_id: string;
@@ -23,6 +24,10 @@ const RadioPlayer: React.FC = () => {
   const [volume, setVolume] = useState(0.8);
   const [isPlaying, setIsPlaying] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const stations_length: number = useMemo(function () {
+    return stations.length;
+  }, []);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hlsRef = useRef<Hls | null>(null);
@@ -50,9 +55,18 @@ const RadioPlayer: React.FC = () => {
       const hls = new Hls();
       hls.loadSource(selected.radio_url);
       hls.attachMedia(newAudio);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        newAudio.play();
-      });
+      // hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      //   newAudio
+      //     .play()
+      //     .then(() => {
+      //       setIsPlaying(true);
+      //     })
+      //     .catch((error) => {
+      //       if (error.name !== "AbortError") {
+      //         console.error("HLS play error:", error);
+      //       }
+      //     });
+      // });
       hlsRef.current = hls;
     } else {
       newAudio.src = selected.radio_url;
@@ -74,9 +88,22 @@ const RadioPlayer: React.FC = () => {
     };
   }, [currentIndex]);
 
+  // const play = () => {
+  //   audioRef.current?.play();
+  //   setIsPlaying(true);
+  // };
   const play = () => {
-    audioRef.current?.play();
-    setIsPlaying(true);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch((err) => {
+        if (err.name !== "AbortError" && err.name !== "NotAllowedError") {
+          console.error("Play error:", err);
+        }
+      });
   };
 
   const pause = () => {
@@ -84,8 +111,8 @@ const RadioPlayer: React.FC = () => {
     setIsPlaying(false);
   };
 
-  const next = () => setCurrentIndex((currentIndex + 1) % stations.length);
-  const prev = () => setCurrentIndex((currentIndex - 1 + stations.length) % stations.length);
+  const next = () => setCurrentIndex((currentIndex + 1) % stations_length);
+  const prev = () => setCurrentIndex((currentIndex - 1 + stations_length) % stations_length);
 
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value);
@@ -95,7 +122,26 @@ const RadioPlayer: React.FC = () => {
     }
   };
 
-  const filteredStations = stations.filter((station) => station.radio_name.toLowerCase().includes(searchTerm.toLowerCase()));
+  function useDebounce(value: string, delay: number) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const handler = setTimeout(() => setDebouncedValue(value), delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  }
+
+  // Usage in your component
+  const debouncedSearchTerm = useDebounce(searchTerm, 300); // 300ms debounce
+
+  const filteredStations = useMemo(() => {
+    return stations.filter((station) => station.radio_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
+  }, [debouncedSearchTerm, stations]);
 
   return (
     <div className="radio-app responsive-layout">
@@ -119,9 +165,10 @@ const RadioPlayer: React.FC = () => {
         <h2>📻 Indian Radios</h2>
         <input type="text" placeholder="Search station..." className="search-input" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <div className="station-list">
+          {/* <VirtualizedList list={filteredStations} height={350} width={255} itemHeight={45} /> */}
           {filteredStations.map((s) => (
             <div key={s.radio_id} className={`station-item ${stations.indexOf(s) === currentIndex ? "active" : ""}`} onClick={() => setCurrentIndex(stations.indexOf(s))}>
-              <img src={s.radio_image} alt={s.radio_name} className="station-icon" />
+              <img src={s.radio_image} alt={s.radio_name} className="station-icon" loading="lazy" />
               <span>{s.radio_name}</span>
             </div>
           ))}
@@ -130,7 +177,7 @@ const RadioPlayer: React.FC = () => {
       <main className="player-content">
         <div className="player">
           <div className="station-art">
-            <img src={station.radio_image} alt="Playing" className="rotating-image" />
+            <img src={station.radio_image} alt="Playing" className="rotating-image" loading="lazy" />
           </div>
           <h3 className="station-title">{station.radio_name}</h3>
 

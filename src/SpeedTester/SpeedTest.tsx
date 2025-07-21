@@ -124,7 +124,7 @@ const SpeedTest: React.FC = () => {
         <title>Speed Test Tool internet </title>
         <meta name="description" content="Test your internet speed: download, upload, and ping – all in one clean UI." />
       </Helmet>
-      ;
+
       <div className="container">
         <h1>Speed Test</h1>
         <div className="meter" ref={meterRef}>

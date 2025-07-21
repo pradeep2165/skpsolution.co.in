@@ -40,11 +40,6 @@ const WavesHero: React.FC = () => {
           </g>
         </svg>
       </div>
-
-      {/* Content */}
-      {/* <div className="content flex">
-        <p>By Goodkatz | Free to use</p>
-      </div> */}
     </div>
   );
 };

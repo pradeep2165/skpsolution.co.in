@@ -1,20 +1,25 @@
+import React, { Suspense } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import SpeedTest from "./SpeedTester/SpeedTest";
-import RadioPlayer from "./FmAudio/RadioPlayer";
-import { FaTachometerAlt, FaBroadcastTower, FaYoutube, FaBlog, FaCode, FaPaintBrush, FaRegObjectGroup } from "react-icons/fa";
-import YouTubeDownloader from "./YTFdownloader/YouTubeDownloader";
-import BlogLayout from "./Blog";
-import BlogRadioPlayer from "./Blog/BlogRadioPlayer";
-import BlogSpeedTestPost from "./Blog/BlogSpeedTestPost";
-import BlogCardDesign from "./Blog/BlogCardDesign";
-import JSPlayGround from "./JSPlayGround";
-import ColorPicker from "./ColorPicker";
-import Navbar from "./components/Navbar";
-import { HelmetProvider } from "react-helmet-async";
+import { FaTachometerAlt, FaBroadcastTower, FaYoutube, FaBlog, FaCode, FaPaintBrush, FaRegObjectGroup, FaTextHeight } from "react-icons/fa";
+
+const SpeedTest = React.lazy(() => import("./SpeedTester/SpeedTest"));
+const RadioPlayer = React.lazy(() => import("./FmAudio/RadioPlayer"));
+const YouTubeDownloader = React.lazy(() => import("./YTFdownloader/YouTubeDownloader"));
+const BlogLayout = React.lazy(() => import("./Blog"));
+const BlogRadioPlayer = React.lazy(() => import("./Blog/BlogRadioPlayer"));
+const BlogSpeedTestPost = React.lazy(() => import("./Blog/BlogSpeedTestPost"));
+const BlogCardDesign = React.lazy(() => import("./Blog/BlogCardDesign"));
+const JSPlayGround = React.lazy(() => import("./JSPlayGround"));
+const ColorPicker = React.lazy(() => import("./ColorPicker"));
+const Navbar = React.lazy(() => import("./components/Navbar"));
 // import Breadcrumbs from "./components/Breadcrumbs";
-import TransformPlayground from "./TransformPlayground/TransformPlayground";
-import WavesHero from "./components/WavesHero";
+const TransformPlayground = React.lazy(() => import("./TransformPlayground/TransformPlayground"));
+const WavesHero = React.lazy(() => import("./components/WavesHero"));
+const TextUtilLayout = React.lazy(() => import("./TextUtils"));
+const TextForm = React.lazy(() => import("./TextUtils/component/TextForm"));
+
 function Home() {
   return (
     <>
@@ -87,6 +92,13 @@ function Home() {
               <p>Experiment with transform properties like rotate, scale, skew, and more visually.</p>
             </div>
           </Link>
+          <Link to="/text-utils" className="card" style={{ textDecoration: "none", color: "inherit" }} aria-label="Navigate to CSS transform playground tool">
+            <FaTextHeight size={48} color="#7d9b6bff" />
+            <div>
+              <h3>Text Utils</h3>
+              <p>Experiment with transform properties like rotate, scale, skew, and more visually.</p>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -123,24 +135,30 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        <Navbar />
-        {/* <Breadcrumbs /> */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/speedtest" element={<SpeedTest />} />
-          <Route path="/fmRadio" element={<RadioPlayer />} />
-          <Route path="/ytf-download" element={<YouTubeDownloader />} />
-          <Route path="/js-paly-ground" element={<JSPlayGround />} />
-          <Route path="/color-picker" element={<ColorPicker />} />
-          <Route path="/transform-playground" element={<TransformPlayground />} />
+        <Suspense fallback={<div className="loader"></div>}>
+          <Navbar />
 
-          <Route path="/blog" element={<BlogLayout />}>
-            <Route path="" element={<BlogRadioPlayer />} />
-            <Route path="radio-player" element={<BlogRadioPlayer />} />
-            <Route path="speed-test" element={<BlogSpeedTestPost />} />
-            <Route path="card-design" element={<BlogCardDesign />} />
-          </Route>
-        </Routes>
+          {/* <Breadcrumbs /> */}
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/speedtest" element={<SpeedTest />} />
+            <Route path="/fmRadio" element={<RadioPlayer />} />
+            <Route path="/ytf-download" element={<YouTubeDownloader />} />
+            <Route path="/js-paly-ground" element={<JSPlayGround />} />
+            <Route path="/color-picker" element={<ColorPicker />} />
+            <Route path="/transform-playground" element={<TransformPlayground />} />
+            <Route path="/blog" element={<BlogLayout />}>
+              <Route path="" element={<BlogRadioPlayer />} />
+              <Route path="radio-player" element={<BlogRadioPlayer />} />
+              <Route path="speed-test" element={<BlogSpeedTestPost />} />
+              <Route path="card-design" element={<BlogCardDesign />} />
+            </Route>
+            <Route path="/text-utils" element={<TextUtilLayout />}>
+              <Route path="" element={<TextForm heading="Enter the text to analyse" />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </Router>
     </HelmetProvider>
   );

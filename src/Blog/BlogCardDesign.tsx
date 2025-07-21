@@ -1,5 +1,7 @@
 import PricingCardOne from "./Cards/PricingCardOne";
 import PricingCardTwo from "./Cards/PricingCardTwo";
+import SunriseAnimation from "./Cards/SunriseAnimation";
+import WaveHero from "./Cards/WaveHero";
 
 const BlogPost: React.FC = () => {
   return (
@@ -10,6 +12,8 @@ const BlogPost: React.FC = () => {
 
       <PricingCardOne />
       <PricingCardTwo />
+      <WaveHero />
+      <SunriseAnimation />
     </div>
   );
 };
