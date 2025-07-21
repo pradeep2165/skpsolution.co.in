@@ -4,26 +4,16 @@ import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import "./RadioPlayer.css";
 import stationData from "./allIndiaStations.ts";
 import { Helmet } from "react-helmet-async";
-// import VirtualizedList from "./VirtualizedList.tsx";
-
-interface Station {
-  radio_id: string;
-  radio_name: string;
-  radio_image: string;
-  radio_url: string;
-  genre: string;
-  country_id: string;
-  country_name: string;
-  country_flag: string;
-}
+const VirtualizedList = React.lazy(() => import("./VirtualizedList.tsx"));
+import type { Station } from "./types.ts";
 
 const stations: Station[] = stationData.stations;
 
 const RadioPlayer: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [volume, setVolume] = useState(0.8);
   const [isPlaying, setIsPlaying] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentStation, setCurrentStation] = useState(stations[0]);
 
   const stations_length: number = useMemo(function () {
     return stations.length;
@@ -32,10 +22,10 @@ const RadioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hlsRef = useRef<Hls | null>(null);
 
-  const station = stations[currentIndex];
+  const station = currentStation;
 
-  const loadStation = (index: number) => {
-    const selected = stations[index];
+  const loadStation = () => {
+    const selected = currentStation;
 
     if (hlsRef.current) {
       hlsRef.current.destroy();
@@ -55,29 +45,16 @@ const RadioPlayer: React.FC = () => {
       const hls = new Hls();
       hls.loadSource(selected.radio_url);
       hls.attachMedia(newAudio);
-      // hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      //   newAudio
-      //     .play()
-      //     .then(() => {
-      //       setIsPlaying(true);
-      //     })
-      //     .catch((error) => {
-      //       if (error.name !== "AbortError") {
-      //         console.error("HLS play error:", error);
-      //       }
-      //     });
-      // });
       hlsRef.current = hls;
+      setIsPlaying(false);
     } else {
       newAudio.src = selected.radio_url;
       newAudio.play();
+      setIsPlaying(true);
     }
-
-    setIsPlaying(true);
   };
-
   useEffect(() => {
-    loadStation(currentIndex);
+    loadStation();
 
     return () => {
       if (hlsRef.current) hlsRef.current.destroy();
@@ -86,12 +63,8 @@ const RadioPlayer: React.FC = () => {
         audioRef.current.src = "";
       }
     };
-  }, [currentIndex]);
+  }, [currentStation]);
 
-  // const play = () => {
-  //   audioRef.current?.play();
-  //   setIsPlaying(true);
-  // };
   const play = () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -100,9 +73,9 @@ const RadioPlayer: React.FC = () => {
       .play()
       .then(() => setIsPlaying(true))
       .catch((err) => {
-        if (err.name !== "AbortError" && err.name !== "NotAllowedError") {
-          console.error("Play error:", err);
-        }
+        setIsPlaying(false);
+        alert("Failed to play stream. Please try a different station.");
+        console.error("Play error:", err);
       });
   };
 
@@ -111,8 +84,18 @@ const RadioPlayer: React.FC = () => {
     setIsPlaying(false);
   };
 
-  const next = () => setCurrentIndex((currentIndex + 1) % stations_length);
-  const prev = () => setCurrentIndex((currentIndex - 1 + stations_length) % stations_length);
+  const next = () => {
+    const result = stations.findIndex((data) => {
+      return data.radio_id == currentStation.radio_id;
+    });
+    setCurrentStation(stations[(result + 1 + stations_length) % stations_length]);
+  };
+  const prev = () => {
+    const result = stations.findIndex((data) => {
+      return data.radio_id == currentStation.radio_id;
+    });
+    setCurrentStation(stations[(result - 1 + stations_length) % stations_length]);
+  };
 
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value);
@@ -142,7 +125,9 @@ const RadioPlayer: React.FC = () => {
   const filteredStations = useMemo(() => {
     return stations.filter((station) => station.radio_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
   }, [debouncedSearchTerm, stations]);
-
+  const handleSetStation = (station: Station) => {
+    setCurrentStation(station); // or however you're storing selected station
+  };
   return (
     <div className="radio-app responsive-layout">
       <Helmet>
@@ -160,18 +145,12 @@ const RadioPlayer: React.FC = () => {
         <meta name="twitter:title" content="Online FM Radio Player" />
         <meta name="twitter:description" content="Stream live FM radio with music, talk, and more. Simple, free, and accessible online radio player." />
       </Helmet>
-      ;
+
       <aside className="station-sidebar">
         <h2>📻 Indian Radios</h2>
         <input type="text" placeholder="Search station..." className="search-input" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <div className="station-list">
-          {/* <VirtualizedList list={filteredStations} height={350} width={255} itemHeight={45} /> */}
-          {filteredStations.map((s) => (
-            <div key={s.radio_id} className={`station-item ${stations.indexOf(s) === currentIndex ? "active" : ""}`} onClick={() => setCurrentIndex(stations.indexOf(s))}>
-              <img src={s.radio_image} alt={s.radio_name} className="station-icon" loading="lazy" />
-              <span>{s.radio_name}</span>
-            </div>
-          ))}
+          <VirtualizedList list={filteredStations} height={350} width={255} itemHeight={64} setStation={handleSetStation} stationId={currentStation.radio_id} />
         </div>
       </aside>
       <main className="player-content">

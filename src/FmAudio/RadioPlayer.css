@@ -40,11 +40,13 @@
 }
 
 /* Scrollbar */
-.station-sidebar::-webkit-scrollbar {
+.station-sidebar::-webkit-scrollbar,
+.container::-webkit-scrollbar {
     width: 6px;
 }
 
-.station-sidebar::-webkit-scrollbar-thumb {
+.station-sidebar::-webkit-scrollbar-thumb,
+.container::-webkit-scrollbar-thumb {
     background-color: #555;
     border-radius: 4px;
 }
@@ -181,8 +183,13 @@
         width: 100%;
         overflow-y: auto;
         box-shadow: none;
-        margin-top: 40px;
+        margin-top: 70px;
         height: 350px;
+    }
+
+    .station-sidebar .container .station-item {
+        width: 100%;
+
     }
 
     .player-content {
