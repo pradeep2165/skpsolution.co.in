@@ -116,7 +116,7 @@ const RadioPlayer: React.FC = () => {
         <title>Online FM Radio Player | Stream Live Music & Radio</title>
         <meta name="description" content="Listen to live FM radio stations online. Enjoy nonstop music, talk shows, and news channels from around the world." />
         <meta name="keywords" content="online FM radio, live radio streaming, internet radio player, music radio, FM station stream" />
-        <meta name="author" content="skpsolution" />
+        <meta name="author" content="skp solution" />
         <meta property="og:title" content="Online FM Radio Player" />
         <meta property="og:description" content="Free online FM radio streaming. Tune into music, news, and talk shows from global radio stations." />
         <meta property="og:url" content="https://skpsolution.co.in/fmRadio" />

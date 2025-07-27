@@ -2,7 +2,7 @@ import PricingCardOne from "./Cards/PricingCardOne";
 import PricingCardTwo from "./Cards/PricingCardTwo";
 import SunriseAnimation from "./Cards/SunriseAnimation";
 import WaveHero from "./Cards/WaveHero";
-
+import EqualizerLoader from "./Cards/EqualizerLoader";
 const BlogPost: React.FC = () => {
   return (
     <div style={styles.container}>
@@ -14,6 +14,7 @@ const BlogPost: React.FC = () => {
       <PricingCardTwo />
       <WaveHero />
       <SunriseAnimation />
+      <EqualizerLoader />
     </div>
   );
 };

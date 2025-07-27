@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import "./YouTubeDownloader.css";
-
+import { io } from "socket.io-client";
 import { Helmet } from "react-helmet-async";
 
 type FormatKey = string;
 
 type Status = "idle" | "loading" | "ready" | "error";
 
-const host = "https://skpsolution.co.in/api";
+const host = "https://skpsolution.co.in";
 
 const YouTubeDownloader: React.FC = () => {
   const [url, setUrl] = useState<string>("");
@@ -30,23 +30,14 @@ const YouTubeDownloader: React.FC = () => {
   }, []);
 
   // Poll for progress if downloading
+
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-
-    if (status === "loading" && url) {
-      interval = setInterval(async () => {
-        try {
-          const res = await fetch(`${host}/api/progress?url=${encodeURIComponent(url)}&formatKey=${encodeURIComponent(format)}`);
-          const json = await res.json();
-          setProgress(json.progress ?? 0);
-        } catch {
-          setProgress(0);
-        }
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [status, url, format]);
+    // const socket = io("https://skpsolution.co.in/socket.io");
+    const socket = io("https://skpsolution.co.in");
+    socket.on("completePercentage", (data) => {
+      setProgress(data);
+    });
+  }, []);
 
   // Validate input URL
   const isValidYouTubeUrl = (url: string): boolean => {
@@ -80,7 +71,9 @@ const YouTubeDownloader: React.FC = () => {
       if (!res.ok) throw new Error("backend error");
 
       const blob = await res.blob();
+      console.log(blob);
       const objectUrl = URL.createObjectURL(blob);
+      console.log(objectUrl);
       setBlobURL(objectUrl);
       setStatus("ready");
     } catch (err) {

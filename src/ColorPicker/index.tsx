@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
   <title>Color Picker Tool | CSS & HEX Color Generator</title>
   <meta name="description" content="Pick and experiment with colors using our intuitive color picker tool. Get HEX, RGB, and HSL values instantly for your CSS and design projects." />
   <meta name="keywords" content="color picker, HEX color tool, CSS color generator, color palette, online color selector" />
-  <meta name="author" content="skpsolution" />
+  <meta name="author" content="skp solution" />
 
   <meta property="og:url" content="https://skpsolution.co.in/color-picker" />
 </Helmet>;

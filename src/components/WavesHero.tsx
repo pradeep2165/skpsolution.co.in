@@ -19,7 +19,7 @@ const WavesHero: React.FC = () => {
             />
           </g>
         </svg> */}
-        <h1>SKPSolution</h1>
+        <h1>SKP Solution</h1>
         <p>We build eCommerce, Property, Downloader, and Radio apps with passion.</p>
         <a href="#contact">
           <button className="cta-button">Get a Free Quote</button>
